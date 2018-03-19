@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<ui:composition template="/_template.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputPanel>Novo proprietário</p:outputPanel>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="form">
+		<p:messages id="messages"/>
+		
+			<p:fieldset legend="Cadastro de proprietario">
+				<p:panelGrid columns="2">
+
+					<p:outputLabel value="CPF: " for="cpf" />
+					<p:inputText id="cpf"
+						value="#{proprietarioMB.proprietario.cpfProprietario}" />
+
+
+					<p:outputLabel value="Nome: " for="nome" />
+					<p:inputText id="nome" value="#{proprietarioMB.proprietario.nome}" />
+
+					<p:outputLabel value="Endereço: " for="endereco" />
+					<p:inputText id="endereco"
+						value="#{proprietarioMB.proprietario.endereco}" />
+
+					<p:outputLabel value="Bairro: " for="bairro" />
+					<p:inputText id="bairro"
+						value="#{proprietarioMB.proprietario.bairro}" />
+
+					<p:outputLabel value="Cidade: " for="cidade" />
+					<p:inputText id="cidade"
+						value="#{proprietarioMB.proprietario.cidade}" />
+
+					<p:outputLabel value="UF: " for="uf" />
+					<p:inputText id="uf" value="#{proprietarioMB.proprietario.uf}" />
+
+					
+
+					<p:outputLabel value="Sexo" />
+						<p:selectOneRadio id="sexo" value="#{proprietarioMB.proprietario.sexo}">
+							<f:selectItem itemLabel="Masculino" itemValue="M" />
+							<f:selectItem itemLabel="Feminino" itemValue="F" />
+						</p:selectOneRadio>
+					
+
+					<p:outputLabel value="Data de nascimento" for="dataNascimento" />
+					<p:calendar id="dataNascimento"
+						value="#{proprietarioMB.proprietario.dataNascimento}"
+						pattern="dd/MM/yyyy" />
+
+
+					
+				</p:panelGrid>
+				<h:panelGrid columns="6">
+			<f:facet name="header">
+				<p:outputLabel value="Telefones" />
+			</f:facet>
+			<p:outputLabel value="DDD" />
+			<p:inputText size="1" value="#{proprietarioMB.telefone.ddd}" />
+
+			<p:outputLabel value="Número" />
+			<p:inputText value="#{proprietarioMB.telefone.numero}" />
+
+			<p:outputLabel value="Tipo Telefone" />
+	    	<p:selectOneMenu value="#{proprietarioMB.telefone.tipoTelefone}">
+	    		<f:selectItems value="#{proprietarioMB.tiposTelefone}" var="tpTelefone" 
+	    		itemValue="#{tpTelefone}" itemLabel="#{tpTelefone.descricaoTipoTelefone}"/>
+	    		<f:converter converterId="tipoTelefoneConverter"/>
+	    	</p:selectOneMenu>
+
+			<p:commandButton value="Adicionar" action="#{proprietarioMB.adicionarTelefone()}" update="form"/>
+		</h:panelGrid>
+			</p:fieldset>
+			<h:panelGrid>
+	    	<p:dataTable value="#{proprietarioMB.proprietario.telefones}" var="item">
+				<p:column headerText="DDD">
+					<p:outputLabel value="#{item.ddd}" />
+				</p:column>
+				<p:column headerText="Número">
+					<p:outputLabel value="#{item.numero}" />
+				</p:column>
+				<p:column headerText="Tipo Telefone">
+					<p:outputLabel value="#{item.tipoTelefone.descricaoTipoTelefone}" />
+				</p:column>
+				<p:column headerText="Editar">
+					<p:commandButton icon="ui-icon-pencil" action="#{proprietarioMB.editarTelefone(item)}" update="form"/>
+				</p:column>
+				<p:column headerText="Excluir">
+					<p:commandButton icon="ui-icon-close" action="#{proprietarioMB.excluirTelefone(item)}" update="form"/>
+				</p:column>
+			</p:dataTable>
+		</h:panelGrid>
+		<p:commandButton value="Salvar"	action="#{proprietarioMB.adicionarProprietario()}"/>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+
+
+</html>
